@@ -13,7 +13,9 @@ export default function DashboardLayout({
       </div>
       <div className="flex flex-col w-full">
         <Navbar />
-        <main className="flex-1 h-screen">{children}</main>
+        <main className="flex-1 h-screen px-5 py-5 bg-slate-50">
+          {children}
+        </main>
       </div>
     </div>
   );
