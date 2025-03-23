@@ -11,8 +11,9 @@ import {
   FormMessage,
 } from "@/components/ui/form";
 import { Input } from "@/components/ui/input";
-import { Link } from "react-router-dom";
-import { ROUTES, SignUpDefaultValues } from "@/utils/constants";
+import { Link, useNavigate } from "react-router-dom";
+import { R_TOKEN, ROUTES, SignUpDefaultValues } from "@/utils/constants";
+import useSignUp from "@/services/auth/mutations/use-signup";
 
 const SignUpForm = () => {
   const form = useForm<SignUpFormType>({
@@ -20,8 +21,20 @@ const SignUpForm = () => {
     defaultValues: SignUpDefaultValues,
   });
 
-  function onSubmit(values: SignUpFormType) {
-    console.log(values);
+  const { mutate, isPending } = useSignUp();
+
+  const navigate = useNavigate();
+
+  function onSubmit(formData: SignUpFormType) {
+    console.log(formData);
+    mutate(formData, {
+      onSuccess: (data) => {
+        if (data.success) {
+          navigate("/dashboard");
+          localStorage.setItem(R_TOKEN, data.data!);
+        }
+      },
+    });
   }
 
   return (
@@ -75,8 +88,12 @@ const SignUpForm = () => {
             Sign In
           </Link>
         </p>
-        <Button type="submit" className="w-full cursor-pointer">
-          Submit
+        <Button
+          type="submit"
+          className="w-full cursor-pointer"
+          disabled={isPending}
+        >
+          {isPending ? "Submitting.." : "Submit"}
         </Button>
       </form>
     </Form>
