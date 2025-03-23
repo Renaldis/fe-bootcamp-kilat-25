@@ -8,15 +8,35 @@ const axios = Axios.create({
   baseURL,
 });
 
-axios.interceptors.request.use((config) => {
-  const token = localStorage.getItem(R_TOKEN);
-  if (token) {
-    config.headers.Authorization = `Bearer ${token}`;
+axios.interceptors.request.use(
+  (config) => {
+    const token = localStorage.getItem(R_TOKEN);
+    if (token) {
+      config.headers.Authorization = `Bearer ${token}`;
+    }
+
+    config.headers["Content-Type"] = "application/json";
+
+    return config;
+  },
+  (error) => Promise.reject(error)
+);
+
+// Response Interceptor: Redirect ke login jika token expired (401)
+axios.interceptors.response.use(
+  (response) => response, // Jika sukses, langsung return response
+  (error) => {
+    if (error.response?.status === 401) {
+      console.warn("Token expired, redirecting to login...");
+
+      // Hapus token dari localStorage
+      localStorage.removeItem(R_TOKEN);
+
+      // Redirect ke halaman login
+      window.location.href = "/auth/signin";
+    }
+    return Promise.reject(error);
   }
-
-  config.headers["Content-Type"] = "application/json";
-
-  return config;
-});
+);
 
 export default axios;
