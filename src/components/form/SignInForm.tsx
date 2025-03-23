@@ -14,13 +14,15 @@ import { Input } from "@/components/ui/input";
 import { Link, useNavigate } from "react-router-dom";
 import { R_TOKEN, ROUTES, SignInDefaultValues } from "@/utils/constants";
 import useSignIn from "@/services/auth/mutations/use-signin";
+import { useState } from "react";
+import { Eye, EyeOff } from "lucide-react";
 
 const SignUpForm = () => {
   const form = useForm<SignInFormType>({
     resolver: zodResolver(signInFormSchema),
     defaultValues: SignInDefaultValues,
   });
-
+  const [showPassword, setShowPassword] = useState(false);
   const { mutate, isPending } = useSignIn();
 
   const navigate = useNavigate();
@@ -59,7 +61,21 @@ const SignUpForm = () => {
             <FormItem>
               <FormLabel>Password</FormLabel>
               <FormControl>
-                <Input placeholder="Email" {...field} />
+                <div className="relative">
+                  <Input
+                    placeholder="Password"
+                    {...field}
+                    type={showPassword ? "text" : "password"}
+                    className="pr-10"
+                  />
+                  <button
+                    type="button"
+                    onClick={() => setShowPassword(!showPassword)}
+                    className="absolute inset-y-0 right-3 flex items-center text-gray-500"
+                  >
+                    {showPassword ? <Eye size={20} /> : <EyeOff size={20} />}
+                  </button>
+                </div>
               </FormControl>
               <FormMessage />
             </FormItem>

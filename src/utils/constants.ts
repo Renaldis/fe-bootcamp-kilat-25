@@ -21,3 +21,9 @@ export const SignInDefaultValues = {
   email: "",
   password: "",
 };
+
+export const AddNewGuestDefaultValues = {
+  name: "",
+  no_hp: "",
+  status_hadir: false,
+};

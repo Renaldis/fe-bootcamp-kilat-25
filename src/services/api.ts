@@ -41,7 +41,9 @@ const getGuests = () => {
 
 // const getNoteById = () => {};
 
-// const deleteNote = async () => {};
+const deleteGuest = async (guestId: string) => {
+  return axios.patch(`/tamu/${guestId}`);
+};
 
 const createGuests = (payload: CreateTamuDto) => {
   return apiResolver<Response<CreateTamuDto>>(() =>
@@ -59,4 +61,4 @@ const createGuests = (payload: CreateTamuDto) => {
 //   }
 //   return response.json();
 // }
-export { getGuests, createGuests };
+export { getGuests, createGuests, deleteGuest };

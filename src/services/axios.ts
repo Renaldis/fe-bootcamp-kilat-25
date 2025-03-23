@@ -31,7 +31,7 @@ axios.interceptors.response.use(
 
       localStorage.removeItem(R_TOKEN);
 
-      window.location.href = "/auth/signin";
+      window.location.href = "/auth/sign-in";
     }
     return Promise.reject(error);
   }

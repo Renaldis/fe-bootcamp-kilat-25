@@ -6,25 +6,25 @@ import {
   DialogFooter,
 } from "@/components/ui/dialog";
 import { Button } from "@/components/ui/button";
-import useLogout from "./SignOut";
 
-const SignOutConfirmation = ({
+const ConfirmationModal = ({
   open,
   setOpen,
+  title,
+  description,
+  onConfirm,
 }: {
-  open: boolean | undefined;
+  open: boolean;
   setOpen: (open: boolean) => void;
+  title: string;
+  description: string;
+  onConfirm: () => void;
 }) => {
-  const logout = useLogout();
-
   return (
     <Dialog open={open} onOpenChange={setOpen}>
       <DialogContent>
-        <DialogTitle>Sign Out Confirmation</DialogTitle>
-        <DialogDescription>
-          Are you sure you want to log out? You will need to log in again to
-          access this page.
-        </DialogDescription>
+        <DialogTitle>{title}</DialogTitle>
+        <DialogDescription>{description}</DialogDescription>
         <DialogFooter>
           <Button
             variant="outline"
@@ -35,10 +35,13 @@ const SignOutConfirmation = ({
           </Button>
           <Button
             variant="destructive"
-            onClick={logout}
-            className="cursor-pointer hover:bg-red-700"
+            onClick={() => {
+              onConfirm();
+              setOpen(false);
+            }}
+            className="hover:bg-red-700 cursor-pointer"
           >
-            Yes, Logout
+            Confirm
           </Button>
         </DialogFooter>
       </DialogContent>
@@ -46,4 +49,4 @@ const SignOutConfirmation = ({
   );
 };
 
-export default SignOutConfirmation;
+export default ConfirmationModal;

@@ -5,8 +5,9 @@ import {
 } from "@/components/ui/tooltip";
 
 import { useNavigate, useLocation } from "react-router-dom";
-import SignOutConfirmation from "../SignOutConfirmation";
 import { useState } from "react";
+import ConfirmationModal from "../ConfirmationModal";
+import useLogout from "../SignOut";
 
 type Tooltip = {
   path?: string;
@@ -19,6 +20,7 @@ export default function TooltipAside({ path, label, type, icon }: Tooltip) {
   const navigate = useNavigate();
   const location = useLocation();
   const [open, setOpen] = useState(false);
+  const logout = useLogout();
 
   return type === "signOut" ? (
     <>
@@ -34,7 +36,13 @@ export default function TooltipAside({ path, label, type, icon }: Tooltip) {
           <p>{label}</p>
         </TooltipContent>
       </Tooltip>
-      <SignOutConfirmation open={open} setOpen={setOpen} />
+      <ConfirmationModal
+        open={open}
+        setOpen={setOpen}
+        title="Sign Out Confirmation"
+        description="Are you sure you want to log out?"
+        onConfirm={logout}
+      />
     </>
   ) : (
     <Tooltip>

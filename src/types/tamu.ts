@@ -11,8 +11,7 @@ export type Tamu = {
 export type CreateTamuDto = {
   name: string;
   no_hp: string;
-  status_hadir: boolean;
-  email: string;
+  status_hadir?: boolean;
 };
 
 export type UpdateTamuDto = {
