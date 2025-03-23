@@ -26,7 +26,6 @@ const SignUpForm = () => {
   const navigate = useNavigate();
 
   function onSubmit(formData: SignInFormType) {
-    console.log(formData);
     mutate(formData, {
       onSuccess: (data) => {
         if (data.success) {

@@ -24,15 +24,13 @@ axios.interceptors.request.use(
 
 // Response Interceptor: Redirect ke login jika token expired (401)
 axios.interceptors.response.use(
-  (response) => response, // Jika sukses, langsung return response
+  (response) => response,
   (error) => {
     if (error.response?.status === 401) {
       console.warn("Token expired, redirecting to login...");
 
-      // Hapus token dari localStorage
       localStorage.removeItem(R_TOKEN);
 
-      // Redirect ke halaman login
       window.location.href = "/auth/signin";
     }
     return Promise.reject(error);

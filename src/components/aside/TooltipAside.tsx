@@ -3,7 +3,10 @@ import {
   TooltipContent,
   TooltipTrigger,
 } from "@/components/ui/tooltip";
+
 import { useNavigate, useLocation } from "react-router-dom";
+import SignOutConfirmation from "../SignOutConfirmation";
+import { useState } from "react";
 
 type Tooltip = {
   path?: string;
@@ -15,18 +18,24 @@ type Tooltip = {
 export default function TooltipAside({ path, label, type, icon }: Tooltip) {
   const navigate = useNavigate();
   const location = useLocation();
+  const [open, setOpen] = useState(false);
+
   return type === "signOut" ? (
-    <Tooltip>
-      <TooltipTrigger
-        className={`w-full p-2 hover:text-red-800 rounded-md cursor-pointer flex items-center gap-2 text-red-700 justify-center md:justify-start`}
-      >
-        <i className={icon}></i>
-        <h1 className="hidden md:block">{label}</h1>
-      </TooltipTrigger>
-      <TooltipContent className="md:hidden">
-        <p>{label}</p>
-      </TooltipContent>
-    </Tooltip>
+    <>
+      <Tooltip>
+        <TooltipTrigger
+          className={`w-full p-2 hover:text-red-800 rounded-md cursor-pointer flex items-center gap-2 text-red-700 justify-center md:justify-start`}
+          onClick={() => setOpen(true)}
+        >
+          <i className={icon}></i>
+          <h1 className="hidden md:block">{label}</h1>
+        </TooltipTrigger>
+        <TooltipContent className="md:hidden">
+          <p>{label}</p>
+        </TooltipContent>
+      </Tooltip>
+      <SignOutConfirmation open={open} setOpen={setOpen} />
+    </>
   ) : (
     <Tooltip>
       <TooltipTrigger
