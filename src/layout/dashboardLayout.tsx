@@ -1,5 +1,5 @@
 import Navbar from "@/components/navbar/NavbarDashboard";
-import AsideDashboard from "../components/AsideDashboard";
+import AsideDashboard from "../components/aside/AsideDashboard";
 
 export default function DashboardLayout({
   children,
