@@ -28,3 +28,14 @@ export const addNewGuestSchema = z.object({
 });
 
 export type AddNewGuestType = z.infer<typeof addNewGuestSchema>;
+
+export const editGuestSchema = z.object({
+  name: z.string().nonempty("Name is required").min(1, "Name min 3 character"),
+  no_hp: z
+    .string()
+    .nonempty("No_Telp is required")
+    .min(9, "No_Telp Min 8 Number")
+    .regex(PhonePattern, "Invalid phone number"),
+  status_hadir: z.boolean(),
+});
+export type EditGuestType = z.infer<typeof editGuestSchema>;

@@ -15,6 +15,7 @@ export type CreateTamuDto = {
 };
 
 export type UpdateTamuDto = {
+  id: number;
   name?: string;
   no_hp?: string;
   status_hadir?: boolean;

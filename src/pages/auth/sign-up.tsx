@@ -1,4 +1,4 @@
-import SignUpForm from "@/components/form/SignUpForm";
+import SignUpForm from "@/components/form/auth/SignUpForm";
 import Logo from "../../assets/guestList-logo.png";
 
 const SignUpPage = () => {

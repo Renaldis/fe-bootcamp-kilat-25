@@ -1,4 +1,4 @@
-import SignInForm from "@/components/form/SignInForm";
+import SignInForm from "@/components/form/auth/SignInForm";
 import Logo from "../../assets/guestList-logo.png";
 
 const SignInPage = () => {

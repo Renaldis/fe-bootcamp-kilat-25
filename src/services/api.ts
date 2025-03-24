@@ -2,7 +2,7 @@ import { apiResolver } from "@/utils/api";
 import axios from "./axios";
 import { Response, SignInDTO, SignUpDTO } from "@/types/user";
 
-import { CreateTamuDto, Tamu } from "@/types/tamu";
+import { CreateTamuDto, Tamu, UpdateTamuDto } from "@/types/tamu";
 import { R_TOKEN } from "@/utils/constants";
 
 type token = string;
@@ -39,8 +39,6 @@ const getGuests = () => {
   );
 };
 
-// const getNoteById = () => {};
-
 const deleteGuest = async (guestId: string) => {
   return axios.patch(`/tamu/${guestId}`);
 };
@@ -51,14 +49,10 @@ const createGuests = (payload: CreateTamuDto) => {
   );
 };
 
-// get tamu
-// export async function fetchGuests() {
-//   const response = await fetch("http://localhost:3000/api/tamu", {
-//     headers: { Authorization: "Bearer " + R_TOKEN },
-//   });
-//   if (!response.ok) {
-//     throw new Error("Failed to fetch tamu");
-//   }
-//   return response.json();
-// }
-export { getGuests, createGuests, deleteGuest };
+const updateGuest = (payload: UpdateTamuDto) => {
+  return apiResolver<Response<UpdateTamuDto>>(() =>
+    axios.put(`/tamu/${payload.id}`, payload)
+  );
+};
+
+export { getGuests, createGuests, deleteGuest, updateGuest };

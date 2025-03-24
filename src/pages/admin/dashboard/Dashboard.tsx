@@ -26,15 +26,16 @@ export default function DashboardPage() {
       <div className="mb-5 flex space-x-5">
         <div className="card w-40 h-35 flex flex-col items-center bg-sky-200 py-5 rounded-lg">
           <User className="text-sky-700" size={30} />
-          <span className="font-bold text-sky-700">Total guest count</span>
+          <span className="font-bold text-sky-700">Total registered</span>
           <span className="font-bold text-sky-700">{guests.length}</span>
         </div>
         <div className="card w-40 h-35 flex flex-col items-center bg-yellow-100 py-5 rounded-lg">
           <ThumbsUp className="text-yellow-700" size={30} />
-          <span className="font-bold text-yellow-700">Total guest count</span>
+          <span className="font-bold text-yellow-700">Total attendees</span>
           <span className="font-bold text-yellow-700">{presentGuests}</span>
         </div>
       </div>
+
       <h1 className="font-bold mb-5">List Guests</h1>
       <Table>
         <TableHeader>
