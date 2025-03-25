@@ -35,7 +35,7 @@ export default function TableList({
   return (
     <>
       <TableRow>
-        <TableCell className="font-medium w-[100-px]">{idx + 1}</TableCell>
+        <TableCell className="font-medium w-[100-px]">{idx}</TableCell>
         <TableCell className="w-[100px]">{guest.name}</TableCell>
         <TableCell className="w-[100px]">{guest.no_hp}</TableCell>
         <TableCell

@@ -23,15 +23,27 @@ export function authorize() {
 }
 
 // Guests
-const getGuests = () => {
+const getGuests = (
+  page: number = 1,
+  limit: number = 10,
+  search: string = "",
+  statusFilter?: boolean
+) => {
   const token = localStorage.getItem(R_TOKEN);
 
   if (!token) {
     return Promise.reject(new Error("No token found"));
   }
 
+  const params = new URLSearchParams();
+  params.append("page", page.toString());
+  params.append("limit", limit.toString());
+  if (search) params.append("search", search);
+  if (statusFilter !== undefined)
+    params.append("status_hadir", statusFilter.toString());
+
   return apiResolver<Response<Tamu[]>>(() =>
-    axios.get("/tamu", {
+    axios.get(`/tamu?${params.toString()}`, {
       headers: {
         Authorization: `Bearer ${token}`,
       },

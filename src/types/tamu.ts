@@ -6,6 +6,7 @@ export type Tamu = {
   status_hadir: boolean;
   createdAt: Date;
   updatedAt: Date;
+  total: number;
 };
 
 export type CreateTamuDto = {
