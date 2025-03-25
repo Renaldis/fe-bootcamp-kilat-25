@@ -73,6 +73,7 @@ function App() {
               <DashboardLayout>
                 <DashboardRoute>
                   <ProfilePage />
+                  <Toaster />
                 </DashboardRoute>
               </DashboardLayout>
             }

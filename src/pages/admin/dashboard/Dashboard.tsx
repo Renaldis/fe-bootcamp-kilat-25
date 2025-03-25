@@ -91,29 +91,37 @@ export default function DashboardPage() {
   return (
     <div className="bg-white p-8 rounded-md shadow-sm">
       <div className="mb-5 flex space-x-5">
-        <div className="card w-40 h-35 flex flex-col items-center bg-sky-200 py-5 rounded-lg">
+        <div className="card w-30 h-25 md:w-40 md:h-35 flex flex-col items-center bg-sky-200 py-5 rounded-lg">
           <User className="text-sky-700" size={30} />
-          <span className="font-bold text-sky-700">Total registered</span>
-          <span className="font-bold text-sky-700">{totalGuestRegister}</span>
+          <span className="font-bold text-sky-700 text-sm md:text-base">
+            Total registered
+          </span>
+          <span className="font-bold text-sky-700 text-sm md:text-base">
+            {totalGuestRegister}
+          </span>
         </div>
-        <div className="card w-40 h-35 flex flex-col items-center bg-yellow-100 py-5 rounded-lg">
+        <div className="card w-30 h-25 md:w-40 md:h-35 flex flex-col items-center bg-yellow-100 py-5 rounded-lg">
           <ThumbsUp className="text-yellow-700" size={30} />
-          <span className="font-bold text-yellow-700">Total attendees</span>
-          <span className="font-bold text-yellow-700">{presentGuests}</span>
+          <span className="font-bold text-yellow-700 text-sm md:text-base">
+            Total attendees
+          </span>
+          <span className="font-bold text-yellow-700 text-sm md:text-base">
+            {presentGuests}
+          </span>
         </div>
       </div>
       <div className="flex flex-row justify-between">
-        <div className="flex flex-row items-center space-x-8 mb-5">
-          <h1 className="font-bold">List Guests</h1>
+        <div className="flex flex-row items-center md:space-x-8 space-x-2 mb-5">
+          <h1 className="font-bold text-sm">List Guests</h1>
           <Input
-            className="w-40"
+            className="md:w-40 w-30"
             placeholder="Search Name | Phone"
             value={searchGuest}
             onChange={(e) => setSearchGuest(e.target.value)}
           />
         </div>
         <Select onValueChange={handleValue}>
-          <SelectTrigger className="w-[120px]">
+          <SelectTrigger className="w-30 md:w-[120px]">
             <SelectValue placeholder="is Present?" />
           </SelectTrigger>
           <SelectContent>
@@ -125,7 +133,7 @@ export default function DashboardPage() {
       </div>
       <Table>
         <TableHeader>
-          <TableRow className="bg-slate-100">
+          <TableRow className="bg-slate-100 text-xs md:text-sm">
             <TableHead className="w-[100px]">No</TableHead>
             <TableHead className="w-[100px]">Name</TableHead>
             <TableHead className="w-[100px]">No Telp</TableHead>

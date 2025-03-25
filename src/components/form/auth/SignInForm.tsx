@@ -16,6 +16,8 @@ import { R_TOKEN, ROUTES, SignInDefaultValues } from "@/utils/constants";
 import useSignIn from "@/services/auth/mutations/use-signin";
 import { useState } from "react";
 import { Eye, EyeOff } from "lucide-react";
+import { saveUserData } from "@/utils/localStorageHelper";
+import { useAuth } from "@/hooks/use-auth";
 
 const SignUpForm = () => {
   const form = useForm<SignInFormType>({
@@ -24,6 +26,7 @@ const SignUpForm = () => {
   });
   const [showPassword, setShowPassword] = useState(false);
   const { mutate, isPending } = useSignIn();
+  const profile = useAuth();
 
   const navigate = useNavigate();
 
@@ -33,6 +36,7 @@ const SignUpForm = () => {
         if (data.success) {
           navigate("/dashboard");
           localStorage.setItem(R_TOKEN, data.data!);
+          saveUserData("", profile.userName ?? "Guest");
         }
       },
     });

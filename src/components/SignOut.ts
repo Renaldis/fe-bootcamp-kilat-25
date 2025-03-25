@@ -10,6 +10,8 @@ const useLogout = () => {
 
     if (localStorage.getItem(R_TOKEN)) {
       localStorage.removeItem(R_TOKEN);
+      localStorage.removeItem("currentPage");
+      localStorage.removeItem("user_data");
     }
 
     navigate("/auth/sign-in", { replace: true });

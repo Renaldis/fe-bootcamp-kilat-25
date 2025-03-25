@@ -1,9 +1,12 @@
-import { useAuth } from "@/hooks/use-auth";
+// import { useAuth } from "@/hooks/use-auth";
 import usePath from "@/hooks/usePath";
+import { getUserData } from "@/utils/localStorageHelper";
+import { Avatar, AvatarFallback, AvatarImage } from "@/components/ui/avatar";
 
 export default function Navbar() {
   const pageName = usePath();
-  const profile = useAuth();
+  // const profile = useAuth();
+  const user = getUserData();
   return (
     <nav>
       <div className="w-full px-10 py-2 flex justify-end md:justify-between shadow-md items-center border-b">
@@ -11,12 +14,12 @@ export default function Navbar() {
           {pageName}
         </div>
         <div className="flex items-center gap-2">
-          <p className="font-semibold">{profile.userName}</p>
-          <img
-            src="https://media.istockphoto.com/id/483627817/photo/showing-off-his-pearly-whites.jpg?s=612x612&w=0&k=20&c=gk6aVVGp52YFx1ZzPVQplGc7JL5zkrfxQTuLjIn2RU8="
-            alt="profile"
-            className="w-14 md:block"
-          />
+          <p className="font-semibold">{user.name}</p>
+          <Avatar className="w-12 h-12 md:block">
+            <AvatarImage src={user.imageUrl} />
+            <AvatarFallback>{user.name.slice(0, 1)}</AvatarFallback>
+          </Avatar>
+          {/* <img src={user.imageUrl} alt="profile" className="w-14 md:block" /> */}
         </div>
       </div>
     </nav>
