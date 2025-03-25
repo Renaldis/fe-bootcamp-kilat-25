@@ -8,6 +8,7 @@ import { AuthProvider } from "./context/auth-context";
 import AddGuestPage from "./pages/admin/dashboardCreateGuest/AddGuestPage";
 import ProfilePage from "./pages/admin/dashboardProfile/Profile";
 import { Toaster } from "./components/ui/sonner";
+import Home from "./pages/client/Home";
 
 function App() {
   const LoginRoute = ({ children }: { children: React.ReactNode }) => {
@@ -29,6 +30,7 @@ function App() {
     <BrowserRouter>
       <AuthProvider>
         <Routes>
+          <Route path="/" element={<Home />} />
           <Route
             path="/auth/sign-up"
             element={
@@ -48,34 +50,34 @@ function App() {
           <Route
             path="/dashboard"
             element={
-              <DashboardLayout>
-                <DashboardRoute>
+              <DashboardRoute>
+                <DashboardLayout>
                   <DashboardPage />
                   <Toaster />
-                </DashboardRoute>
-              </DashboardLayout>
+                </DashboardLayout>
+              </DashboardRoute>
             }
           />
           <Route
             path="/dashboard/create"
             element={
-              <DashboardLayout>
-                <DashboardRoute>
+              <DashboardRoute>
+                <DashboardLayout>
                   <AddGuestPage />
                   <Toaster />
-                </DashboardRoute>
-              </DashboardLayout>
+                </DashboardLayout>
+              </DashboardRoute>
             }
           />
           <Route
             path="/dashboard/profile"
             element={
-              <DashboardLayout>
-                <DashboardRoute>
+              <DashboardRoute>
+                <DashboardLayout>
                   <ProfilePage />
                   <Toaster />
-                </DashboardRoute>
-              </DashboardLayout>
+                </DashboardLayout>
+              </DashboardRoute>
             }
           />
         </Routes>

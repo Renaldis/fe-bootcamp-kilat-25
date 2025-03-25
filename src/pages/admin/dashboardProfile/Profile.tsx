@@ -31,7 +31,7 @@ export default function ProfilePage() {
     e.preventDefault();
     updateUserData(formData);
     setIsEdit(false);
-    // window.location.reload();
+    window.location.reload();
     toast.success("successfully update profile");
   };
 
@@ -42,8 +42,11 @@ export default function ProfilePage() {
       </div>
       <div className="bg-white p-8 rounded-md shadow-sm flex flex-col justify-center items-center">
         <img
-          src={storedUser.imageUrl}
-          alt=""
+          src={
+            storedUser?.imageUrl ||
+            "https://thumbs.dreamstime.com/b/default-avatar-profile-icon-vector-social-media-user-image-182145777.jpg"
+          }
+          alt="test"
           className="rounded-full w-32 h-32 md:w-40 md:h-40 object-cover shadow-xl border border-slate-400"
         />
         {!isEdit ? (

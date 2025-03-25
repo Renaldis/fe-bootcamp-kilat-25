@@ -9,6 +9,7 @@ export function useUpdateGuest() {
     mutationFn: (guestData: UpdateTamuDto) => updateGuest(guestData),
     onSuccess: () => {
       queryClient.invalidateQueries({ queryKey: ["guests"] });
+      queryClient.invalidateQueries({ queryKey: ["guestsPresents"] });
     },
   });
 }

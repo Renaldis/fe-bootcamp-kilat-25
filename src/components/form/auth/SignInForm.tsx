@@ -32,11 +32,15 @@ const SignUpForm = () => {
 
   function onSubmit(formData: SignInFormType) {
     mutate(formData, {
-      onSuccess: (data) => {
+      onSuccess: async (data) => {
         if (data.success) {
+          await new Promise((resolve) => {
+            localStorage.setItem(R_TOKEN, data.data!);
+            resolve("");
+          });
+
+          saveUserData("", profile?.userName || "Guest");
           navigate("/dashboard");
-          localStorage.setItem(R_TOKEN, data.data!);
-          saveUserData("", profile.userName ?? "Guest");
         }
       },
     });

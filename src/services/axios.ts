@@ -30,6 +30,7 @@ axios.interceptors.response.use(
       console.warn("Token expired, redirecting to login...");
 
       localStorage.removeItem(R_TOKEN);
+      localStorage.removeItem("user_data");
 
       window.location.href = "/auth/sign-in";
     }
