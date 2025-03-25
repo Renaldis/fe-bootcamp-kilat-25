@@ -17,7 +17,6 @@ import useSignIn from "@/services/auth/mutations/use-signin";
 import { useState } from "react";
 import { Eye, EyeOff } from "lucide-react";
 import { saveUserData } from "@/utils/localStorageHelper";
-import { useAuth } from "@/hooks/use-auth";
 
 const SignUpForm = () => {
   const form = useForm<SignInFormType>({
@@ -25,8 +24,7 @@ const SignUpForm = () => {
     defaultValues: SignInDefaultValues,
   });
   const [showPassword, setShowPassword] = useState(false);
-  const { mutate, isPending } = useSignIn();
-  const profile = useAuth();
+  const { mutate, isPending, error } = useSignIn();
 
   const navigate = useNavigate();
 
@@ -38,9 +36,9 @@ const SignUpForm = () => {
             localStorage.setItem(R_TOKEN, data.data!);
             resolve("");
           });
-
-          saveUserData("", profile?.userName || "Guest");
-          navigate("/dashboard");
+          saveUserData("", "");
+          navigate("/dashboard", { replace: true });
+          window.location.reload();
         }
       },
     });
@@ -98,13 +96,16 @@ const SignUpForm = () => {
             Sign Up
           </Link>
         </p>
-        <Button
-          type="submit"
-          className="w-full cursor-pointer"
-          disabled={isPending}
-        >
-          {isPending ? "Submitting.." : "Submit"}
-        </Button>
+        <div className="text-center space-y-3">
+          <Button
+            type="submit"
+            className="w-full cursor-pointer"
+            disabled={isPending}
+          >
+            {isPending ? "Submitting.." : "Submit"}
+          </Button>
+          <span className="text-center text-red-500">{error?.message}</span>
+        </div>
       </form>
     </Form>
   );

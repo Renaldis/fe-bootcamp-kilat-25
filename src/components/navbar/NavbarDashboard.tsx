@@ -3,10 +3,12 @@ import usePath from "@/hooks/usePath";
 import { getUserData } from "@/utils/localStorageHelper";
 import { Avatar, AvatarFallback, AvatarImage } from "@/components/ui/avatar";
 import { useNavigate } from "react-router-dom";
+import { useAuth } from "@/hooks/use-auth";
 
 export default function Navbar() {
   const pageName = usePath();
   const user = getUserData();
+  const profile = useAuth();
 
   const navigate = useNavigate();
   return (
@@ -19,10 +21,10 @@ export default function Navbar() {
           className="flex items-center gap-2 cursor-pointer"
           onClick={() => navigate("/dashboard")}
         >
-          <p className="font-semibold">{user.name}</p>
+          <p className="font-semibold">{profile?.userName}</p>
           <Avatar className="w-12 h-12 md:block">
             <AvatarImage src={user.imageUrl} />
-            <AvatarFallback>{user.name.slice(0, 1)}</AvatarFallback>
+            <AvatarFallback>{profile?.userName?.slice(0, 1)}</AvatarFallback>
           </Avatar>
         </div>
       </div>

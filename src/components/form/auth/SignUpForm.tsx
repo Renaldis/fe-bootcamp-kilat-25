@@ -12,7 +12,7 @@ import {
 } from "@/components/ui/form";
 import { Input } from "@/components/ui/input";
 import { Link, useNavigate } from "react-router-dom";
-import { R_TOKEN, ROUTES, SignUpDefaultValues } from "@/utils/constants";
+import { ROUTES, SignUpDefaultValues } from "@/utils/constants";
 import useSignUp from "@/services/auth/mutations/use-signup";
 import { Eye, EyeOff } from "lucide-react";
 import { useState } from "react";
@@ -24,7 +24,7 @@ const SignUpForm = () => {
   });
   const [showPassword, setShowPassword] = useState(false);
 
-  const { mutate, isPending } = useSignUp();
+  const { mutate, isPending, error } = useSignUp();
 
   const navigate = useNavigate();
 
@@ -32,8 +32,7 @@ const SignUpForm = () => {
     mutate(formData, {
       onSuccess: (data) => {
         if (data.success) {
-          navigate("/dashboard");
-          localStorage.setItem(R_TOKEN, data.data!);
+          navigate("/auth/sign-in");
         }
       },
     });
@@ -104,13 +103,16 @@ const SignUpForm = () => {
             Sign In
           </Link>
         </p>
-        <Button
-          type="submit"
-          className="w-full cursor-pointer"
-          disabled={isPending}
-        >
-          {isPending ? "Submitting.." : "Submit"}
-        </Button>
+        <div className="text-center space-y-3">
+          <Button
+            type="submit"
+            className="w-full cursor-pointer"
+            disabled={isPending}
+          >
+            {isPending ? "Submitting.." : "Submit"}
+          </Button>
+          <span className="text-center text-red-500">{error?.message}</span>
+        </div>
       </form>
     </Form>
   );

@@ -8,6 +8,7 @@ type AuthContextType = {
   userName: string | null;
   token: string | null;
   logout: () => void;
+  setUserName: (value: string) => void;
 };
 
 export const AuthContext = createContext<AuthContextType | null>(null);
@@ -17,7 +18,9 @@ export const AuthProvider = ({ children }: { children: React.ReactNode }) => {
     localStorage.getItem(R_TOKEN)
   );
   const [userEmail, setUserEmail] = useState<string | null>(null);
-  const [userName, setUserName] = useState<string | null>(null);
+  const [userName, setUserName] = useState<string | null>(
+    localStorage.getItem("user_name") || null
+  );
   const navigate = useNavigate();
 
   useEffect(() => {
@@ -29,7 +32,11 @@ export const AuthProvider = ({ children }: { children: React.ReactNode }) => {
         } = jwtDecode(token);
 
         setUserEmail(decode.email);
-        setUserName(decode.name);
+
+        if (!localStorage.getItem("user_name")) {
+          setUserName(decode.name);
+          localStorage.setItem("user_name", decode.name);
+        }
       } catch (error) {
         console.error("Invalid token", error);
         logout();
@@ -46,8 +53,21 @@ export const AuthProvider = ({ children }: { children: React.ReactNode }) => {
     navigate("/auth/sign-in");
   };
 
+  const updateUserName = (newName: string) => {
+    setUserName(newName);
+    localStorage.setItem("user_name", newName);
+  };
+
   return (
-    <AuthContext.Provider value={{ userEmail, token, logout, userName }}>
+    <AuthContext.Provider
+      value={{
+        userEmail,
+        token,
+        logout,
+        userName,
+        setUserName: updateUserName,
+      }}
+    >
       {children}
     </AuthContext.Provider>
   );

@@ -30,6 +30,7 @@ export default function ProfilePage() {
   const handleEditProfile = (e: React.FormEvent<HTMLFormElement>) => {
     e.preventDefault();
     updateUserData(formData);
+    profile.setUserName(formData.name);
     setIsEdit(false);
     window.location.reload();
     toast.success("successfully update profile");
@@ -55,7 +56,7 @@ export default function ProfilePage() {
               {profile.userEmail}
             </h1>
             <h1 className="text-sm md:text-xl font-normal text-center">
-              {storedUser.name}
+              {profile.userName}
             </h1>
             <button
               className="text-slate-200 bg-blue-600 rounded-full shadow-2xl text-sm md:text-base py-1 px-3 md:px-6 md:py-1 mt-2 hover:bg-blue-800 hover:text-slate-100 cursor-pointer"
@@ -74,7 +75,7 @@ export default function ProfilePage() {
                 type="text"
                 placeholder="Name"
                 name="name"
-                defaultValue={storedUser.name}
+                defaultValue={profile.userName || ""}
                 className="my-3"
                 onChange={handleChange}
               />
