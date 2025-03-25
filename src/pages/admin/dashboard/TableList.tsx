@@ -1,5 +1,5 @@
 import ConfirmationModal from "@/components/ConfirmationModal";
-import EditGuestForm from "@/components/form/guests/EditGuestForm";
+
 import { TableCell, TableRow } from "@/components/ui/table";
 import { useDeleteGuest } from "@/services/guests/mutations/soft-delete-guests";
 import { Tamu } from "@/types/tamu";
@@ -9,12 +9,15 @@ import { toast } from "sonner";
 export default function TableList({
   guest,
   idx,
+  onEdit,
+  setSelectedGuestId,
 }: {
   guest: Tamu;
   idx: number;
+  onEdit: () => void;
+  setSelectedGuestId: (guestId: number) => void;
 }) {
   const [isOpenConfirmModal, setIsOpenConfirmModal] = useState(false);
-  const [isOpenEditModal, setIsOpenEditModal] = useState(false);
 
   const { mutate } = useDeleteGuest();
 
@@ -45,26 +48,26 @@ export default function TableList({
         <TableCell className="w-[100px] flex gap-2 items-center">
           <i
             className="fas fa-edit text-cyan-600 dark:text-cyan-500 hover:text-cyan-800 cursor-pointer"
-            onClick={() => setIsOpenEditModal(true)}
+            onClick={() => {
+              onEdit();
+              setSelectedGuestId(guest.id);
+            }}
           />
           <i
             className="fas fa-trash text-red-600 hover:text-red-800 cursor-pointer"
             onClick={() => setIsOpenConfirmModal(true)}
           />
         </TableCell>
-        {isOpenConfirmModal && (
-          <ConfirmationModal
-            open={isOpenConfirmModal}
-            setOpen={setIsOpenConfirmModal}
-            title="Delete Guest"
-            description="Are you sure you want to delete this guest?"
-            onConfirm={HandleDelete}
-          />
-        )}
-        {isOpenEditModal && (
-          <EditGuestForm open={isOpenEditModal} setOpen={setIsOpenEditModal} guestId={guest.id} />
-        )}
       </TableRow>
+      {isOpenConfirmModal && (
+        <ConfirmationModal
+          open={isOpenConfirmModal}
+          setOpen={setIsOpenConfirmModal}
+          title="Delete Guest"
+          description="Are you sure you want to delete this guest?"
+          onConfirm={HandleDelete}
+        />
+      )}
     </>
   );
 }

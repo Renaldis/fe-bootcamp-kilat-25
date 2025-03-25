@@ -1,4 +1,10 @@
-import { Dialog, DialogContent, DialogHeader } from "@/components/ui/dialog";
+import {
+  Dialog,
+  DialogContent,
+  DialogDescription,
+  DialogHeader,
+  DialogTitle,
+} from "@/components/ui/dialog";
 
 import { zodResolver } from "@hookform/resolvers/zod";
 import { useForm } from "react-hook-form";
@@ -30,8 +36,7 @@ export default function EditGuestForm({
   setOpen: (open: boolean) => void;
   guestId: number;
 }) {
-  const { data } = useGuestById(guestId);
-  console.log(data);
+  const { data, isLoading } = useGuestById(guestId);
 
   const form = useForm<z.infer<typeof editGuestSchema>>({
     resolver: zodResolver(editGuestSchema),
@@ -50,7 +55,7 @@ export default function EditGuestForm({
         status_hadir: data.data.status_hadir || false,
       });
     }
-  }, [data, form]);
+  }, [data?.data, form]);
 
   const { mutate, isPending, error } = useUpdateGuest();
 
@@ -74,10 +79,18 @@ export default function EditGuestForm({
     );
   }
 
+  if (isLoading) {
+    return <div>Loading..</div>;
+  }
+
   return (
     <Dialog open={open} onOpenChange={setOpen}>
       <DialogContent>
         <DialogHeader>
+          <DialogTitle>Edit profile</DialogTitle>
+          <DialogDescription>
+            Make changes to guest data here. Click save when you're done.
+          </DialogDescription>
           <Form {...form}>
             <form onSubmit={form.handleSubmit(onSubmit)} className="space-y-8">
               <FormField
@@ -87,11 +100,7 @@ export default function EditGuestForm({
                   <FormItem>
                     <FormLabel>Name</FormLabel>
                     <FormControl>
-                      <Input
-                        placeholder="Name"
-                        {...field}
-                        defaultValue={data?.data.name}
-                      />
+                      <Input placeholder="Name" {...field} />
                     </FormControl>
                     <FormMessage />
                   </FormItem>
@@ -104,11 +113,7 @@ export default function EditGuestForm({
                   <FormItem>
                     <FormLabel>No Telp</FormLabel>
                     <FormControl>
-                      <Input
-                        placeholder="No Telp"
-                        {...field}
-                        defaultValue={data?.data.no_hp}
-                      />
+                      <Input placeholder="No Telp" {...field} />
                     </FormControl>
                     <FormMessage />
                   </FormItem>
@@ -123,9 +128,10 @@ export default function EditGuestForm({
                     <FormControl>
                       <div className="flex items-center gap-2 capitalize">
                         <Checkbox
-                          checked={field.value}
-                          onCheckedChange={field.onChange}
-                          defaultChecked={data?.data.status_hadir}
+                          checked={!!field.value}
+                          onCheckedChange={(checked) =>
+                            field.onChange(!!checked)
+                          }
                         />
                         <span>yes</span>
                       </div>

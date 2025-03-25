@@ -9,10 +9,14 @@ import {
 } from "@/components/ui/table";
 import { useGuests } from "@/services/guests/mutations/use-guests";
 import { ThumbsUp, User } from "lucide-react";
+import EditGuestForm from "@/components/form/guests/EditGuestForm";
+import { useState } from "react";
 
 export default function DashboardPage() {
   const { data, isLoading } = useGuests();
   const guests = data?.data || [];
+  const [isOpenEditModal, setIsOpenEditModal] = useState<boolean>(false);
+  const [selectedGuestId, setSelectedGuestId] = useState<number>(0);
 
   if (isLoading) {
     return <div>Loading...</div>;
@@ -35,8 +39,10 @@ export default function DashboardPage() {
           <span className="font-bold text-yellow-700">{presentGuests}</span>
         </div>
       </div>
-
-      <h1 className="font-bold mb-5">List Guests</h1>
+      <div className="flex flex-row">
+        <h1 className="font-bold mb-5">List Guests</h1>
+        {/* <Input width={5} /> */}
+      </div>
       <Table>
         <TableHeader>
           <TableRow className="bg-slate-100">
@@ -52,7 +58,13 @@ export default function DashboardPage() {
         <TableBody>
           {guests.length > 0 ? (
             guests.map((guest, idx) => (
-              <TableList key={guest.id} guest={guest} idx={idx} />
+              <TableList
+                key={guest.id}
+                guest={guest}
+                idx={idx}
+                onEdit={() => setIsOpenEditModal(true)}
+                setSelectedGuestId={setSelectedGuestId}
+              />
             ))
           ) : (
             <TableRow>
@@ -63,6 +75,14 @@ export default function DashboardPage() {
           )}
         </TableBody>
       </Table>
+
+      {isOpenEditModal && (
+        <EditGuestForm
+          open={isOpenEditModal}
+          setOpen={setIsOpenEditModal}
+          guestId={selectedGuestId}
+        />
+      )}
     </div>
   );
 }
